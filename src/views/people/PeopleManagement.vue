@@ -1,36 +1,46 @@
 <template>
-    <div class="meetingList">
+    <div class="peopleList" style="overflow-x: auto">
         <vheader>
             <span slot="title" class="title">人员管理</span>
         </vheader>
-        <div class="cardBox">
-          <div class="card">
-            <router-link tag="div" to="/addMeeting/3" class="content">
-              Java大牛 带你从0到上线开发企业级电商项目
-            </router-link>
-            <div class="bottom">
-              <a href="javascript:void(0)" @click="dialogTableVisible = true">详情</a>
-              <span>管理员：admin </span>
+        <el-button type="danger" icon="el-icon-plus" class="addpeople" size='mini'>添加用户</el-button>
+        <div class="table-box">
+          <div class="top">
+            <div class="action">
+              <a href="javascript:;"><i class="icon import_normal"></i>导入用户</a>
+              <a href="javascript:;"><i class="icon template_normal"></i>模板下载</a>
+            </div>
+            <div class="search">
+             <el-input placeholder="请输入关键字" v-model="input5" class="input-with-select">
+                 <el-select v-model="select" slot="prepend" placeholder="请选择">
+                  <el-option label="显示名" value="1"></el-option>
+                  <el-option label="组别" value="2"></el-option>
+                  <el-option label="类型" value="3"></el-option>
+                  </el-select>
+                <el-button slot="append" icon="el-icon-search"></el-button>
+              </el-input>
             </div>
           </div>
-
-           <div class="card">
-              <router-link tag="div" to="/addMeeting/1" class="content">
-               Java大牛 带你从0到上线开发企业级电商项目
-              </router-link>
-            <div class="bottom">
-              <a href="javascript:void(0)">详情</a>
-              <span>管理员：admin </span>
-            </div>
-          </div>
-          <div class="card">
-              <router-link tag="div" to="/addMeeting/2" class="content">
-               Java大牛 带你从0到上线开发企业级电商项目
-              </router-link>
-            <div class="bottom">
-              <a href="javascript:void(0)">详情</a>
-              <span>管理员：admin </span>
-            </div>
+          <div>
+            <el-table :data="tableData" style="width: 100%">
+              <el-table-column prop="date" label="账号" ></el-table-column>
+              <el-table-column  prop="name" label="显示名" ></el-table-column>
+              <el-table-column prop="address" label="组别"></el-table-column>
+              <el-table-column prop="time" label="创建时间"></el-table-column>
+              <el-table-column prop="type" label="类型"></el-table-column>
+              <el-table-column prop="note" label="备注"></el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
           </div>
         </div>
         <div class="paging">
@@ -49,7 +59,26 @@ import vheader from 'components/vheader'
 export default {
   data () {
     return {
-      dialogTableVisible: false
+      dialogTableVisible: false,
+      input5: '',
+      select: '显示名',
+       tableData: [{
+            date: 'admin',
+            name: 'admin',
+            address: '杭州小组',
+            time: '2018.05.31',
+            type: '管理员',
+            note: '备注内容',
+            operation: '操作'
+          }]
+    }
+  },
+  methods: {
+    handleEdit(index, row) {
+        console.log(index, row);
+    },
+    handleDelete(index, row) {
+        console.log(index, row);
     }
   },
   components: {
@@ -57,86 +86,61 @@ export default {
   }
 }
 </script>
-<style lang='less' coped>
-.meetingList /deep/ .el-dialog__header{
-  text-align: center;
-  border-bottom: 1px solid #E6E6E6;
-  padding:0;
-  height: 38px;
-  line-height: 42px;
-  box-sizing: border-box;
-}
-.meetingList /deep/.el-dialog__headerbtn {
-  top:5px;
-}
-.meetingList /deep/.el-dialog__wrapper{
-    justify-content: center;
-    align-items: center;
-    display: flex;
-}
-.meetingList /deep/ .el-dialog__body{
-  padding:20px 40px 40px 40px;
-  line-height: 18px;
-}
-.meetingList /deep/.el-pager li,.meetingList /deep/.el-pagination button:disabled,.el-pagination .btn-next, .meetingList /deep/.el-pagination .btn-prev{
-  background:inherit
-}
-.meetingList /deep/.btn-prev,.meetingList /deep/.btn-next{
-  width: 24px;
-  height: 24px;
-  border: 1px solid #D0D4E0;
-  box-sizing: border-box;
-  border-radius: 4px;
+<style lang='less' scoped>
+.peopleList /deep/.el-input-group__prepend .el-input {
+    width: 90px;
   }
- .meetingList /deep/ .el-pagination button, .el-pagination span:not([class*=suffix]){
-    min-width: 24px;
-    padding:0;
+ .peopleList /deep/ .el-input__inner{
+   width: 130px;
+ }
+.peopleList /deep/ .input-with-select .el-input-group__prepend {
+    background-color: #fff;
   }
-.meetingList{
-    .cardBox {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    .card {
-      &:hover{
-        box-shadow: 0 0 8px 2px #DFD4C9;
+  .peopleList /deep/ .search .el-button--default{
+    background: #AB1D29;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    color: #fff;
+    border:1px solid #AB1D29;
+  }
+  .peopleList /deep/.el-table th {
+        background-color: #F5F2EF;
+  }
+.peopleList{
+  .addpeople{
+    position: absolute;
+    top:15px;
+    right: 15px;
+  }
+  .table-box{
+    .top{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+      .action{
+        a{
+          color: #282828;
+          margin-right: 20px;
+        }
       }
-      position: relative;
-      width: 220px;
-      height: 138px;
-      background: #fff;
-      box-shadow: 2px 2px 2px 0 #e8dbce;
-      border-radius: 4px;
-      margin: 16px 20px 0 0;
-      .content {
-        color: #212121;
+      .icon{
         font-size: 14px;
-        display: flex;
-        align-items: center;
-        padding: 0 18px;
-        width: 100%;
-        height: 108px;
-        box-sizing: border-box;
-        line-height: 22px;
-        &:hover{
-          cursor: pointer;
-          color: #129BED;
+        display: inline-block;
+        width: 19px;
+        height: 19px;
+        vertical-align: middle;
+        margin-right: 8px;
+        &.import_normal{
+          background: url('../../assets/images/import_normal.png')
+        }
+        &.template_normal{
+           background: url('../../assets/images/template_normal.png')
         }
       }
-      .bottom {
-        display: flex;
-        height: 30px;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 9px;
-        border-top: 1px solid #f5f2ef;
-        box-sizing: border-box;
-        a {
-          color: #129bed;
-        }
-        span {
-          color: #868686;
-        }
+      .search{
+        
+        margin-right: 15px;
       }
     }
   }

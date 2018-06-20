@@ -106,9 +106,9 @@ export default {
     font-size: 14px;
 }
 .pages{
-    background:#F5F2EF;
+    background:#fff;
     height: 100%;
-    .leftView{144
+    .leftView{
           .is-active{
                .icon.nav_icon_user_active{
                    background: url('../assets/images/nav_icon_user_active.png') no-repeat !important;
