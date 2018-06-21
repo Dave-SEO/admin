@@ -37,6 +37,11 @@ export default new Router({
           component: resolve => require(['views/people/AddPeople'], resolve)
         },
         {
+          path: '/CreateRoom',
+          name: '/CreateRoom',
+          component: resolve => require(['views/meeting/CreateRoom'], resolve)
+        },
+        {
           path: '/edit/:id',
           name: '/edit',
           component: resolve => require(['views/people/edit'], resolve)
