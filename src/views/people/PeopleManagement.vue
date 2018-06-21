@@ -3,7 +3,9 @@
         <vheader>
             <span slot="title" class="title">人员管理</span>
         </vheader>
-        <el-button type="danger" icon="el-icon-plus" class="addpeople" size='mini'>添加用户</el-button>
+        <router-link to="/AddPeople">
+          <el-button type="danger" icon="el-icon-plus" class="addpeople" size='mini'>添加用户</el-button>
+        </router-link>
         <div class="table-box">
           <div class="top">
             <div class="action">
@@ -41,6 +43,13 @@
                 </template>
               </el-table-column>
             </el-table>
+            <el-dialog title="" :visible.sync="dialogFormVisible" center width='350px'  top='40vh'>
+                <span>确定要删除吗？</span>
+                <div slot="footer" class="dialog-footer">
+                  <el-button type="danger" @click="dialogFormVisible = false" size='medium'>完成</el-button>
+                  <el-button @click="dialogFormVisible = false" size='medium'>取 消</el-button>
+                </div>
+              </el-dialog>
           </div>
         </div>
         <div class="paging">
@@ -60,25 +69,28 @@ export default {
   data () {
     return {
       dialogTableVisible: false,
+      dialogFormVisible: false,
       input5: '',
       select: '显示名',
-       tableData: [{
-            date: 'admin',
-            name: 'admin',
-            address: '杭州小组',
-            time: '2018.05.31',
-            type: '管理员',
-            note: '备注内容',
-            operation: '操作'
-          }]
+      tableData: [{
+        date: 'admin',
+        name: 'admin',
+        address: '杭州小组',
+        time: '2018.05.31',
+        type: '管理员',
+        note: '备注内容',
+        operation: '操作'
+      }]
     }
   },
   methods: {
-    handleEdit(index, row) {
-        console.log(index, row);
+    handleEdit (index, row) {
+      this.$router.push('/edit/' + index)
+      console.log(index, row)
     },
-    handleDelete(index, row) {
-        console.log(index, row);
+    handleDelete (index, row) {
+      this.dialogFormVisible = true
+      console.log(index, row)
     }
   },
   components: {
@@ -87,6 +99,10 @@ export default {
 }
 </script>
 <style lang='less' scoped>
+.peopleList /deep/ .el-button--danger{
+  background: #AB1D29;
+  border:1px solid #AB1D29;
+}
 .peopleList /deep/.el-input-group__prepend .el-input {
     width: 90px;
   }
@@ -106,6 +122,10 @@ export default {
   .peopleList /deep/.el-table th {
         background-color: #F5F2EF;
   }
+ .peopleList /deep/ .el-dialog__body{
+   font-size: 16px;
+   text-align: center;
+ }
 .peopleList{
   .addpeople{
     position: absolute;
@@ -139,7 +159,7 @@ export default {
         }
       }
       .search{
-        
+
         margin-right: 15px;
       }
     }

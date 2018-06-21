@@ -2,6 +2,7 @@
 <template>
 <header class='header'>
     <slot name="title"></slot>
+    <slot name="back"></slot>
 </header>
 </template>
 <script type='text/ecmascript-6'>
@@ -22,7 +23,7 @@ export default {
         width: 100%;
         height: 60px;
         border-bottom: 1px solid #dcdcdc;
-        .title{
+        .title,.back{
             display: inline-block;
             height: 100%;
             font-size: 20px;

@@ -30,13 +30,18 @@ export default new Router({
           path: '/MeetingManagement',
           name: 'MeetingManagement',
           component: resolve => require(['views/meeting/MeetingManagement'], resolve)
+        },
+        {
+          path: '/AddPeople',
+          name: '/AddPeople',
+          component: resolve => require(['views/people/AddPeople'], resolve)
+        },
+        {
+          path: '/edit/:id',
+          name: '/edit',
+          component: resolve => require(['views/people/edit'], resolve)
         }
       ]
-    },
-    {
-      path: '/addMeeting/:id',
-      name: '/addMeeting',
-      component: resolve => require(['views/people/AddMeeting'], resolve)
     }
     // {
     //   path: '/demo',
